@@ -63,5 +63,5 @@ void main()
     specular *= 5.0 * max(dot(normalMap, lightDir), 0.0);
 
 	// Calculate Color
-	gl_FragColor = vec4(texture2D(s_normals, texCoord).rgb, 1.0) * vec4((ambient + diffuse + specular), 1.0f);
+	gl_FragColor = vec4(texture2D(s_texture, texCoord).rgb, 1.0) * vec4((ambient + diffuse + specular), 1.0f);
 }
