@@ -27,6 +27,8 @@ uniform struct Light
    float ambientCoefficient;
 } light;
 
+bool bumpmapping = false;
+
 void main()
 {
 	if (worldCoord.y > clippingPlane.y)
@@ -52,16 +54,19 @@ void main()
         specularCoefficient = pow(max(0.0, dot(surfaceToCamera, reflect(-surfaceToLight, normal))), materialShininess);
     vec3 specular = specularCoefficient * materialSpecularColor * light.intensities;
     
-    // Bump Mapping 
-    vec3 normalMap = texture2D(s_normals, texCoord/2).rgb;
-    normalMap = normalize(normalMap * 2.0 - 1.0);
+   	// Bump Mapping
+    if (bumpmapping)
+    {
+	    vec3 normalMap = texture2D(s_normals, texCoord*1.0).rgb;
+	    normalMap = normalize(normalMap * 2.0 - 1.0);
 
-    vec3 lightDir = vec3(light.position.xy - gl_FragCoord.xy, light.position.z);
-    lightDir = normalize(lightDir);
-    
-    diffuse *= 5.0 * max(dot(normalMap, lightDir), 0.0);
-    specular *= 5.0 * max(dot(normalMap, lightDir), 0.0);
+	    vec3 lightDir = vec3(light.position.xy - gl_FragCoord.xy, light.position.z);
+	    lightDir = normalize(lightDir);
+	    
+	    diffuse *= 4.0 * max(dot(normalMap, lightDir), 0.0);
+	    specular *= 4.0 * max(dot(normalMap, lightDir), 0.0);
+	}
 
 	// Calculate Color
-	gl_FragColor = vec4(texture2D(s_texture, texCoord).rgb, 1.0) * vec4((ambient + diffuse + specular), 1.0f);
+	gl_FragColor = vec4(texture2D(s_texture, texCoord).rgb, 1.0) * vec4((ambient + diffuse + specular*2.0), 1.0f);
 }
