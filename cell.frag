@@ -6,7 +6,7 @@
 #version 400
 
 uniform mat4 modelViewMatrix;
-uniform vec4 clippingPlane;
+uniform vec4 cPlane;
 uniform vec3 materialSpecularColor;
 uniform vec3 cameraPosition;
 uniform sampler2D s_texture;
@@ -27,11 +27,19 @@ uniform struct Light
    float ambientCoefficient;
 } light;
 
+uniform struct Plane
+{
+	vec3 point;
+	vec3 normal;
+} clippingPlane;
+
 bool bumpmapping = false;
 
 void main()
 {
-	if (worldCoord.y > clippingPlane.y)
+	vec3 diff = worldCoord.xyz - clippingPlane.point;
+	float dotprod = dot(diff, clippingPlane.normal);
+	if (dotprod < 0)
 		discard;
 
     // Locals
