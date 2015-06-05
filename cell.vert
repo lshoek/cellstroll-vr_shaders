@@ -22,5 +22,5 @@ void main()
     texCoord = a_texCoord;
 
     worldCoord = modelMatrix * vec4(vertPosition, 1.0);
-	gl_Position = modelViewMatrix * projectionMatrix * vec4(vertPosition, 1.0);
+	gl_Position = projectionMatrix * modelViewMatrix * vec4(vertPosition, 1.0);
 }
