@@ -6,7 +6,6 @@
 #version 400
 
 uniform mat4 modelViewMatrix;
-uniform vec4 cPlane;
 uniform vec3 materialSpecularColor;
 uniform vec3 cameraPosition;
 uniform sampler2D s_texture;
