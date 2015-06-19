@@ -12,6 +12,7 @@ uniform sampler2D s_texture;
 uniform sampler2D s_normals;
 uniform float materialShininess;
 uniform float time;
+uniform bool collision;
 
 in vec3 fragVert;
 in vec3 fragNormal;
@@ -74,6 +75,10 @@ void main()
 	    specular *= 4.0 * max(dot(normalMap, lightDir), 0.0);
 	}
 
+  vec3 selection = vec3(0.0, 0.0, 0.0);
+  if (collision)
+      selection = vec3(0.3, 0.3, 0.3);
+
 	// Calculate Color
-	gl_FragColor = vec4(texture2D(s_texture, texCoord).rgb, 1.0) * vec4((ambient + diffuse + specular*2.0), 1.0f);
+	gl_FragColor = vec4(texture2D(s_texture, texCoord).rgb + selection, 1.0) * vec4((ambient + diffuse + specular*2.0), 1.0f);
 }
