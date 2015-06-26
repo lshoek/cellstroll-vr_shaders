@@ -71,8 +71,9 @@ float snoise(vec2 v)
 
 vec3 getColor(float f)
 {
-	vec3 color1 = vec3(22,34,42);
-	vec3 color2 = vec3(58,96,115);
+	vec3 color1 = vec3(255,188,189);
+	vec3 color2 = vec3(255,112,158);
+	//vec3 color2 = vec3(255,148,182);
 
 	float r, g, b;
 
@@ -96,7 +97,7 @@ vec3 getColor(float f)
 
 void main()
 {
-	float coeff = 0.5f;
+	float coeff = 0.6f;
 	float fbm = 
 		(0.5*sin(time))*snoise(vec2(5.0*texCoord*coeff))
 		+ 0.5*snoise(vec2(10.0*texCoord*coeff))
@@ -104,5 +105,5 @@ void main()
 		+ 0.125*snoise(vec2(40.0*texCoord*coeff))
 		+ 0.0625*snoise(vec2(80.0*texCoord*coeff));
 
-	gl_FragColor = vec4((getColor(fbm)/2), 1.0f);
+	gl_FragColor = vec4((getColor(fbm)), 1.0f);
 }
