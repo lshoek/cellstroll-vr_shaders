@@ -71,8 +71,8 @@ float snoise(vec2 v)
 
 vec3 getColor(float f)
 {
-	vec3 color1 = vec3(22,34,42);
-	vec3 color2 = vec3(58,96,115);
+	vec3 color1 = vec3(255,255,255);
+	vec3 color2 = vec3(197,197,197);
 
 	float r, g, b;
 
