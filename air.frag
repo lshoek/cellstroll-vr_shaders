@@ -74,7 +74,7 @@ vec3 getColor(float f)
 	vec3 color1 = vec3(255,188,189);
 	vec3 color2 = vec3(255,112,158);
 	//vec3 color2 = vec3(255,148,182);
-
+	
 	float r, g, b;
 
 	if (color1.r > color2.r)
