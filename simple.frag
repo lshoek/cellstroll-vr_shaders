@@ -8,6 +8,7 @@ uniform sampler2D s_normals;
 uniform float materialShininess;
 uniform float time;
 uniform bool isRight;
+uniform bool texEnabled;
 
 in vec3 fragVert;
 in vec3 fragNormal;
@@ -49,13 +50,18 @@ void main()
     //gl_FragColor = vec4(texture2D(s_texture, texCoord).rgb, 1.0) * vec4((ambient + diffuse + specular), 1.0);
     vec2 fragTexCoord;
 
-    if (isRight)
-        fragTexCoord = texCoord * vec2(-1.0, 1.0);
-    else
-        fragTexCoord = texCoord;
+	if (texEnabled)
+	{
+	    if (isRight)
+	        fragTexCoord = texCoord * vec2(-1.0, 1.0);
+	    else
+	        fragTexCoord = texCoord;
 
-    gl_FragColor = vec4(texture2D(s_texture, fragTexCoord));
+	    gl_FragColor = vec4(texture2D(s_texture, fragTexCoord));
 
-    if (gl_FragColor.a < 1.0)
-        discard;
+	    if (gl_FragColor.a < 1.0)
+	        discard;
+	}
+	else
+		gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
 }
