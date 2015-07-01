@@ -1,12 +1,11 @@
 #version 400
 
-uniform float time;
-uniform vec2 screenSize;
-uniform sampler2D s_texture;
-varying vec2 texCoord;
+uniform sampler2D screenTexture;
+uniform sampler2D byteDataTexture;
+in vec2 texCoord;
 
 void main()
 {
-	vec4 color = texture(s_texture, texCoord);
-	gl_FragColor = color;
+	gl_FragData[0] = texture(screenTexture, texCoord);
+	gl_FragData[1] = texture(byteDataTexture, texCoord) * 1.5;
 }

@@ -3,9 +3,8 @@
 layout(location = 0) in vec3 vertPosition;
 
 uniform mat4 modelViewProjectionMatrix;
-uniform float time;
 uniform vec2 screenSize;
-varying vec2 texCoord;
+out vec2 texCoord;
 
 void main()
 {
