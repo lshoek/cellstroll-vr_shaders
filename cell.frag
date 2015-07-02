@@ -85,10 +85,11 @@ void main()
 
     gl_FragData[0] = vec4(texture2D(s_texture, texCoord).rgb + selectionColor, 1.0) * vec4((ambient + diffuse + specular*2.0), 1.0); 
 
+    int index = elementIndex + 1;
     vec3 diffvec = pointerPosition - worldCoord.xyz;
     float distance = sqrt(diffvec.x * diffvec.x + diffvec.y * diffvec.y + diffvec.z * diffvec.z);
     if (isPointing && distance < 0.5)
-        gl_FragData[1] = vec4(vec3(elementIndex/256.0), 1.0);
+        gl_FragData[1] = vec4(vec3(index/256.0), 1.0);
     else
         gl_FragData[1] = vec4(vec3(0.0), 1.0);
 }
