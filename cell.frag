@@ -81,7 +81,7 @@ void main()
     vec3 selectionColor = vec3(0.0);
 
     if (selected)
-        selectionColor = vec3(0.5);
+        selectionColor = vec3(0.3);
 
     gl_FragData[0] = vec4(texture2D(s_texture, texCoord).rgb + selectionColor, 1.0) * vec4((ambient + diffuse + specular*2.0), 1.0); 
 
