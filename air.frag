@@ -105,5 +105,5 @@ void main()
 		+ 0.125*snoise(vec2(40.0*texCoord*coeff))
 		+ 0.0625*snoise(vec2(80.0*texCoord*coeff));
 
-	gl_FragColor = vec4((getColor(fbm)), 1.0f);
+	gl_FragData[0] = vec4((getColor(fbm)), 1.0f);
 }

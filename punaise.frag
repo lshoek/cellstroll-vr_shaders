@@ -11,8 +11,6 @@ uniform vec3 cameraPosition;
 uniform sampler2D s_texture;
 uniform sampler2D s_normals;
 uniform float materialShininess;
-uniform float time;
-uniform bool collision;
 
 in vec3 fragVert;
 in vec3 fragNormal;
@@ -26,8 +24,6 @@ uniform struct Light
    float attenuation;
    float ambientCoefficient;
 } light;
-
-bool bumpmapping = false;
 
 void main()
 {
@@ -50,24 +46,7 @@ void main()
     if(diffuseCoefficient > 0.0)
         specularCoefficient = pow(max(0.0, dot(surfaceToCamera, reflect(-surfaceToLight, normal))), materialShininess);
     vec3 specular = specularCoefficient * materialSpecularColor * light.intensities;
-    
-   	// Bump Mapping
-    if (bumpmapping)
-    {
-	    vec3 normalMap = texture2D(s_normals, texCoord*1.0).rgb;
-	    normalMap = normalize(normalMap * 2.0 - 1.0);
-
-	    vec3 lightDir = vec3(light.position.xy - gl_FragCoord.xy, light.position.z);
-	    lightDir = normalize(lightDir);
-	    
-	    diffuse *= 4.0 * max(dot(normalMap, lightDir), 0.0);
-	    specular *= 4.0 * max(dot(normalMap, lightDir), 0.0);
-	}
-
-    vec3 selection = vec3(0.0);
-    if (collision)
-        selection = vec3(0.3);
 
 	// Calculate Color
-	gl_FragColor = vec4(texture2D(s_texture, texCoord).rgb + selection, 1.0) * vec4((ambient + diffuse + specular*2.0), 1.0f);
+	gl_FragData[0] = vec4(texture2D(s_texture, texCoord).rgb, 1.0) * vec4((ambient + diffuse + specular*2.0), 1.0f);
 }

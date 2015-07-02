@@ -12,7 +12,6 @@ out vec4 worldCoord;
 uniform mat4 modelMatrix;
 uniform mat4 modelViewMatrix;
 uniform mat4 projectionMatrix;
-uniform float time;
 
 void main()
 {

@@ -15,8 +15,8 @@ void main()
     else
         fragTexCoord = texCoord;
 
-    gl_FragColor = vec4(texture2D(s_texture, fragTexCoord));
+    gl_FragData[0] = vec4(texture2D(s_texture, fragTexCoord));
 
-    if (gl_FragColor.a < 1.0)
+    if (gl_FragData[0].a < 1.0)
         discard;
 }

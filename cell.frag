@@ -8,11 +8,14 @@
 uniform mat4 modelViewMatrix;
 uniform vec3 materialSpecularColor;
 uniform vec3 cameraPosition;
+uniform vec3 pointerPosition;
 uniform sampler2D s_texture;
 uniform sampler2D s_normals;
 uniform float materialShininess;
 uniform float time;
-uniform bool collision;
+uniform int elementIndex;
+uniform bool isPointing;
+uniform bool selected;
 
 in vec3 fragVert;
 in vec3 fragNormal;
@@ -75,10 +78,17 @@ void main()
 	    specular *= 4.0 * max(dot(normalMap, lightDir), 0.0);
 	}
 
-    vec3 selection = vec3(0.0);
-    if (collision)
-        selection = vec3(0.3);
+    vec3 selectionColor = vec3(0.0);
 
-	// Calculate Color
-	gl_FragColor = vec4(texture2D(s_texture, texCoord).rgb + selection, 1.0) * vec4((ambient + diffuse + specular*2.0), 1.0f);
+    if (selected)
+        selectionColor = vec3(0.5);
+
+    gl_FragData[0] = vec4(texture2D(s_texture, texCoord).rgb + selectionColor, 1.0) * vec4((ambient + diffuse + specular*2.0), 1.0); 
+
+    vec3 diffvec = pointerPosition - worldCoord.xyz;
+    float distance = sqrt(diffvec.x * diffvec.x + diffvec.y * diffvec.y + diffvec.z * diffvec.z);
+    if (isPointing && distance < 0.5)
+        gl_FragData[1] = vec4(vec3(elementIndex/256.0), 1.0);
+    else
+        gl_FragData[1] = vec4(vec3(0.0), 1.0);
 }
